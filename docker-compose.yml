@@ -1,0 +1,39 @@
+services:
+    banality-db:
+        container_name: banality-db
+        image: mariadb:10.6
+        ports: 
+            - "13306:3306"
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: symfony
+            MYSQL_USER: symfony
+            MYSQL_PASSWORD: symfony
+        networks:
+            - banality-db
+    banality-php:
+        container_name: banality-php
+        build: ./docker/php-fpm
+        volumes:
+            - ./app:/var/www/symfony:cached
+        depends_on:
+            - banality-db
+        networks:
+            - banality-db
+            - banality-php
+    banality-nginx:
+        image: nginx:1.20
+        ports:
+            - "10080:80"
+        depends_on:
+            - banality-php
+        networks:
+            - banality-php
+        volumes:
+            - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+            - ./docker/nginx/symfony.conf:/etc/nginx/sites-enabled/symfony.conf
+            - ./app:/var/www/symfony:cached
+networks:
+    banality-db:
+    banality-php:
+    
