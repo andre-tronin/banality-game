@@ -15,6 +15,7 @@ services:
         container_name: banality-php
         build: ./docker/php-fpm
         volumes:
+            - ~/.composer:/home/www-data/.composer
             - ./app:/var/www/symfony:cached
         depends_on:
             - banality-db
