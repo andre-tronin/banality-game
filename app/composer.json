@@ -1,4 +1,6 @@
 {
+    "name": "andre-tronin/banality-game",
+    "description": "Online Game. Be banal to win!",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "dev",
