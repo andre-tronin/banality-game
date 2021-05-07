@@ -11,7 +11,7 @@ dev-init:
 	${DOCKER_COMPOSE_CMD} exec banality-php ${SYMFONY_CMD} doctrine:database:drop --force
 	${DOCKER_COMPOSE_CMD} exec banality-php ${SYMFONY_CMD} doctrine:database:create
 	${DOCKER_COMPOSE_CMD} exec banality-php ${SYMFONY_CMD} doctrine:schema:create
-	${DOCKER_COMPOSE_CMD} exec banality-php ${SYMFONY_CMD} doctrine:fixtures:load
+	${DOCKER_COMPOSE_CMD} exec banality-php ${SYMFONY_CMD} doctrine:fixtures:load --no-interaction
 
 dev-down:
 	${DOCKER_COMPOSE_CMD} down
