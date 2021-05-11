@@ -1,0 +1,50 @@
+<?php
+
+namespace App\Repository;
+
+use App\Entity\RoundStats;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
+
+/**
+ * @method RoundStats|null find($id, $lockMode = null, $lockVersion = null)
+ * @method RoundStats|null findOneBy(array $criteria, array $orderBy = null)
+ * @method RoundStats[]    findAll()
+ * @method RoundStats[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ */
+class RoundStatsRepository extends ServiceEntityRepository
+{
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, RoundStats::class);
+    }
+
+    // /**
+    //  * @return RoundStats[] Returns an array of RoundStats objects
+    //  */
+    /*
+    public function findByExampleField($value)
+    {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.exampleField = :val')
+            ->setParameter('val', $value)
+            ->orderBy('r.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    */
+
+    /*
+    public function findOneBySomeField($value): ?RoundStats
+    {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.exampleField = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+    */
+}
