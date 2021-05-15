@@ -7,6 +7,13 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=WordRepository::class)
+ * @ORM\Table(
+ *    uniqueConstraints={
+ *        @ORM\UniqueConstraint(
+ *            name="user_round",
+ *            columns={"word", "user_id", "round_id"}
+ *        )
+ *    })
  */
 class Word
 {
@@ -15,31 +22,38 @@ class Word
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
-    private $word;
+    private string $word;
 
     /**
-     * @ORM\OneToOne(targetEntity=User::class, cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=User::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private $user;
+    private User $user;
 
     /**
-     * @ORM\OneToOne(targetEntity=Round::class, cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Round::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private $round;
+    private Round $round;
 
-    public function getId(): ?int
+    public function __construct(string $word, User $user, Round $round)
+    {
+        $this->word = $word;
+        $this->user = $user;
+        $this->round = $round;
+    }
+
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getWord(): ?string
+    public function getWord(): string
     {
         return $this->word;
     }
@@ -63,7 +77,7 @@ class Word
         return $this;
     }
 
-    public function getRound(): ?Round
+    public function getRound(): Round
     {
         return $this->round;
     }

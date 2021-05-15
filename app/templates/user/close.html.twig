@@ -1,0 +1,27 @@
+{% extends 'user/index.html.twig' %}
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{ asset('js/reload.js') }}"></script>
+{% endblock %}
+{% block content %}
+	<div class="alert alert-warning center" role="alert">
+		<h5>word</h5>
+		<h3>{{ currentWord }}</h3>
+	</div>
+	<div class="alert alert-danger center" role="alert">
+		<h5>players</h5>
+		<h3>{{ usersWithCurrentWord }}</h3>
+	</div>
+
+	<div class="alert alert-info center" role="alert">
+		<h5>topic</h5>
+		<h3>{{ topic }}</h3>
+	</div>
+
+	<ul class="list-group">
+		{% for word in words %}
+			<li class="list-group-item list-group-item-success">{{ word.word }}</li>
+		{% endfor %}
+	</ul>
+
+{% endblock %}

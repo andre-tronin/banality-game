@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello{{ app.user.username }}
+{% endblock %}
+
+{% block body %}
+	<h3>Hello{{ app.user.username }}</h3>
+	<br>
+	<ul class="list-group">
+		{% for userScore in userStats %}
+			<li class="list-group-item">{{ userScore.user.nickname }}
+				<span class="badge">{{ userScore.score }}</span>
+			</li>
+		{% endfor %}
+	</ul>
+  {% block content %}{% endblock %}
+{% endblock %}

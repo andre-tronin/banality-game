@@ -12,33 +12,38 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Game
 {
+    public const STATUS_START = 'start';
+    public const STATUS_OPEN = 'open';
+    public const STATUS_CLOSE = 'close';
+    public const STATUS_END = 'end';
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", columnDefinition="ENUM('start', 'open', 'close', 'end')"), nullable=true)
      */
-    private $status;
+    private ?string $status;
 
     /**
      * @ORM\ManyToMany(targetEntity=User::class)
      */
-    private $users;
+    private Collection $users;
 
     /**
      * @ORM\OneToMany(targetEntity=Round::class, mappedBy="game", orphanRemoval=true)
      */
-    private $rounds;
+    private Collection $rounds;
 
     /**
      * @ORM\OneToOne(targetEntity=Round::class, cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
-    private $currentRound;
+    private ?Round $currentRound;
 
     public function __construct()
     {
@@ -46,7 +51,7 @@ class Game
         $this->rounds = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }

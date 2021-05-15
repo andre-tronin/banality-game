@@ -1,0 +1,5 @@
+{% extends 'user/index.html.twig' %}
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{ asset('js/reload.js') }}"></script>
+{% endblock %}

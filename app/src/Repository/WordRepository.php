@@ -2,6 +2,8 @@
 
 namespace App\Repository;
 
+use App\Entity\Round;
+use App\Entity\User;
 use App\Entity\Word;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -19,22 +21,35 @@ class WordRepository extends ServiceEntityRepository
         parent::__construct($registry, Word::class);
     }
 
-    // /**
-    //  * @return Word[] Returns an array of Word objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return Word[] Returns an array of Word objects
+     */
+    public function findAllForCurrentWord(Round $round): array
     {
         return $this->createQueryBuilder('w')
-            ->andWhere('w.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('w.round = :round')
+            ->andWhere('w.word = :word')
+            ->setParameter('round', $round)
+            ->setParameter('word', $round->getCurrentWord()->getWord())
             ->orderBy('w.id', 'ASC')
-            ->setMaxResults(10)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
+
+    /**
+     * @return Word[] Returns an array of Word objects
+     */
+    public function findAllForRoundAndUser(User $user, Round $round): array
+    {
+        return $this->createQueryBuilder('w')
+            ->andWhere('w.user = :user')
+            ->andWhere('w.round = :round')
+            ->setParameter('user', $user)
+            ->setParameter('round', $round)
+            ->orderBy('w.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 
     /*
     public function findOneBySomeField($value): ?Word
