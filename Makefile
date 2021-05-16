@@ -17,6 +17,9 @@ dev-init:
 dev-down:
 	$(DOCKER_COMPOSE_CMD) down
 
+dev-stop:
+	$(DOCKER_COMPOSE_CMD) stop
+
 dev-cli:
 	$(DOCKER_COMPOSE_CMD) exec banality-php bash
 
@@ -26,4 +29,4 @@ php-cs-check:
 php-cs-fix:
 	$(DOCKER_COMPOSE_CMD) exec -e PHP_CS_FIXER_FUTURE_MODE=1 banality-php $(PHP_CS_FIXER_CMD) fix
 
-.PHONY: dev-up dev-init dev-down dev-cli php-cs-check php-cs-fix
+.PHONY: dev-up dev-init dev-down dev-stop dev-cli php-cs-check php-cs-fix
