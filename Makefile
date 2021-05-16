@@ -13,6 +13,8 @@ dev-init:
 	$(DOCKER_COMPOSE_CMD) exec banality-php $(SYMFONY_CMD) doctrine:database:drop --force
 	$(DOCKER_COMPOSE_CMD) exec banality-php $(SYMFONY_CMD) doctrine:database:create
 	$(DOCKER_COMPOSE_CMD) exec banality-php $(SYMFONY_CMD) doctrine:schema:create
+	$(DOCKER_COMPOSE_CMD) exec banality-php $(SYMFONY_CMD) doctrine:migrations:sync-metadata-storage
+	$(DOCKER_COMPOSE_CMD) exec banality-php $(SYMFONY_CMD) doctrine:migrations:version --add --all
 	$(DOCKER_COMPOSE_CMD) exec banality-php $(SYMFONY_CMD) doctrine:fixtures:load --no-interaction
 
 dev-down:
