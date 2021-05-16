@@ -31,6 +31,14 @@ jobs:
       working-directory: ./app
       run: composer install --prefer-dist --no-progress
 
+    - name: Run php-cs
+      working-directory: ./app
+      run: vendor/bin/php-cs-fixer  fix --verbose --diff --dry-run
+
+    - name: Run phpunit
+      working-directory: ./app
+      run: bin/phpunit --verbose
+
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
 
