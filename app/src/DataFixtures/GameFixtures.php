@@ -22,15 +22,14 @@ class GameFixtures extends Fixture implements DependentFixtureInterface
         $game->addUser($user);
         $manager->persist($game);
 
-
-        $round1 =    new Round();
+        $round1 = new Round();
         $round1->setTopic('topic one');
         $round1->setGame($game);
         $manager->persist($round1);
 
         $game->setCurrentRound($round1);
 
-        $round2 =    new Round();
+        $round2 = new Round();
         $round2->setTopic('topic two');
         $round2->setGame($game);
         $manager->persist($round2);
@@ -53,6 +52,7 @@ class GameFixtures extends Fixture implements DependentFixtureInterface
 
         $manager->flush();
     }
+
     public function getDependencies()
     {
         return [
