@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b8c81ee87986ef3cfb17f7e70b59797e",
+    "content-hash": "3f464493215ff1be81a9222a45d178cd",
     "packages": [
         {
             "name": "composer/package-versions-deprecated",
@@ -8523,26 +8523,26 @@
         },
         {
             "name": "symfony/phpunit-bridge",
-            "version": "v5.3.0-BETA4",
+            "version": "v5.2.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/phpunit-bridge.git",
-                "reference": "8204af9408cf4962e2389ef6a8ea1169a6f57ca4"
+                "reference": "b3cf2c3f7f6196fb498002920c1ae9036d9e5619"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/8204af9408cf4962e2389ef6a8ea1169a6f57ca4",
-                "reference": "8204af9408cf4962e2389ef6a8ea1169a6f57ca4",
+                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/b3cf2c3f7f6196fb498002920c1ae9036d9e5619",
+                "reference": "b3cf2c3f7f6196fb498002920c1ae9036d9e5619",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.1.3",
-                "symfony/deprecation-contracts": "^2.1"
+                "php": ">=5.5.9"
             },
             "conflict": {
-                "phpunit/phpunit": "<7.5|9.1.2"
+                "phpunit/phpunit": "<4.8.35|<5.4.3,>=5.0|<6.4,>=6.0|9.1.2"
             },
             "require-dev": {
+                "symfony/deprecation-contracts": "^2.1",
                 "symfony/error-handler": "^4.4|^5.0"
             },
             "suggest": {
@@ -8586,7 +8586,7 @@
             "description": "Provides utilities for PHPUnit, especially user deprecation notices management",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/phpunit-bridge/tree/v5.3.0-BETA4"
+                "source": "https://github.com/symfony/phpunit-bridge/tree/v5.2.8"
             },
             "funding": [
                 {
@@ -8602,7 +8602,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-05-11T21:21:52+00:00"
+            "time": "2021-05-07T12:56:09+00:00"
         },
         {
             "name": "symfony/web-profiler-bundle",
