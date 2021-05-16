@@ -16,12 +16,12 @@ class GameServiceTest extends TestCase
     {
         $entityManager = $this->createStub(EntityManagerInterface::class);
         $userScoreRepository = $this->createStub(UserScoreRepository::class);
-        $wordRepository = $this->createStub(WordRepository::class);
+        $wordRepository = $this->createStub(WordRepository::class) ;
 
         $wordRepository->method('findAllForRoundAndUser')->willReturn(range(0, 9));
 
         $gameService = new GameService($entityManager, $userScoreRepository, $wordRepository);
 
-        $this->assertSame('max_reachedf', $gameService->addWord(new Round(), new User(), ''));
+        $this->assertSame('max_reached', $gameService->addWord(new Round(), new User(), ''));
     }
 }
