@@ -7,7 +7,7 @@
 	<ul class="list-group">
 		{% for userScore in userStats %}
 			<li class="list-group-item">{{ userScore.user.nickname }}
-				<span class="badge">{{ userScore.score }}</span>
+				<span class="badge  bg-secondary">{{ userScore.score }}</span>
 			</li>
 		{% endfor %}
 	</ul>

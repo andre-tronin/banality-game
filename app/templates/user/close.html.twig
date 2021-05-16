@@ -1,7 +1,7 @@
 {% extends 'user/index.html.twig' %}
 {% block javascripts %}
 	{{ parent() }}
-	<script src="{{ asset('js/reload.js') }}"></script>
+	{{ encore_entry_script_tags('reload') }}
 {% endblock %}
 {% block content %}
 	<div class="alert alert-warning center" role="alert">

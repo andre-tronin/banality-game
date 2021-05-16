@@ -19,7 +19,7 @@
 			</div>
 		</form>
 	{% else %}
-		<script src="{{ asset('js/reload.js') }}"></script>
+		{{ encore_entry_script_tags('reload') }}
 	{% endif %}
 
 	{% if result is not null %}

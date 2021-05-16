@@ -10,7 +10,8 @@ RUN chmod +x /usr/local/bin/install-php-extensions && sync && \
 
 COPY symfony.pool.conf $PHP_INIT_DIR/conf.d/
 
-RUN groupmod -g ${GID} www-data && \
+# only for dev
+RUN groupmod -o -g ${GID} www-data && \
     usermod -u ${UID} -d /home/www-data www-data
 
 USER www-data

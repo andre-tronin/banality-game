@@ -1,6 +1,6 @@
-
-
+@import "~bootstrap";
 body {
+    background-color: lightgray;
 	font-size: 15px;
 	padding: 20px;
 }
