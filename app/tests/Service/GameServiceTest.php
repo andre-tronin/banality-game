@@ -16,7 +16,7 @@ class GameServiceTest extends TestCase
     {
         $entityManager = $this->createStub(EntityManagerInterface::class);
         $userScoreRepository = $this->createStub(UserScoreRepository::class);
-        $wordRepository = $this->createStub(WordRepository::class) ;
+        $wordRepository = $this->createStub(WordRepository::class);
 
         $wordRepository->method('findAllForRoundAndUser')->willReturn(range(0, 9));
 
