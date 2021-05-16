@@ -22,6 +22,6 @@ class GameServiceTest extends TestCase
 
         $gameService = new GameService($entityManager, $userScoreRepository, $wordRepository);
 
-        $this->assertSame('max_reached', $gameService->addWord(new Round(), new User(), ''));
+        $this->assertSame('max_reachedf', $gameService->addWord(new Round(), new User(), ''));
     }
 }
