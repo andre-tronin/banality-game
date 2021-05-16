@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Game;
+use App\Security\GameVoter;
 use App\Service\GameService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +23,8 @@ class UserController extends AbstractController
 
     #[
         Route('/{game_id}', name: 'user'),
-        Entity('game', expr: 'repository.find(game_id)')
+        Entity('game', expr: 'repository.find(game_id)'),
+        IsGranted(GameVoter::PLAY, subject: 'game')
     ]
     public function index(Game $game, Request $request): Response
     {
@@ -42,6 +45,8 @@ class UserController extends AbstractController
 
     public function startAction(Game $game, array $userStats): Response
     {
+        $this->gameService->addUser($game, $this->getUser());
+
         return $this->render('user/start.html.twig', [
             'userStats' => $userStats,
         ]);

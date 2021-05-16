@@ -84,4 +84,12 @@ class GameService
             return $word->getUser()->getNickname();
         }, $result);
     }
+
+    public function addUser(Game $game, User $user): void
+    {
+        if (!$game->getUsers()->contains($user)) {
+            $game->addUser($user);
+            $this->entityManager->flush();
+        }
+    }
 }

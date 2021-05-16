@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello IndexController!
+{% endblock %}
+
+{% block body %}
+	{% for message in app.flashes('note') %}
+		<div class="alert alert-warning">
+			{{ message }}
+		</div>
+	{% endfor %}
+{% endblock %}

@@ -45,6 +45,12 @@ class Game
      */
     private ?Round $currentRound;
 
+    /**
+     * @ORM\OneToOne(targetEntity=User::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private User $admin;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -130,6 +136,18 @@ class Game
     public function setCurrentRound(Round $currentRound): self
     {
         $this->currentRound = $currentRound;
+
+        return $this;
+    }
+
+    public function getAdmin(): User
+    {
+        return $this->admin;
+    }
+
+    public function setAdmin(User $admin): self
+    {
+        $this->admin = $admin;
 
         return $this;
     }
