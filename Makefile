@@ -7,12 +7,10 @@ CURRENT_UID := $(shell id -u)
 CURRENT_GID := $(shell id -g)
 BASE_DIR := $(shell pwd)
 NODE_CMD=docker run -it --rm -w /var/src -v $(BASE_DIR)/app:/var/src node:16-alpine
-export CURRENT_UID
-export CURRENT_GID
 
 dev-up:
-	$(DOCKER_COMPOSE_CMD) build --build-arg UID=$(CURRENT_UID) --build-arg GID=$(CURRENT_GID)
-	$(DOCKER_COMPOSE_CMD) up -d
+	UID_GID="$(CURRENT_UID):$(CURRENT_GID)" $(DOCKER_COMPOSE_CMD) build
+	UID_GID="$(CURRENT_UID):$(CURRENT_GID)" $(DOCKER_COMPOSE_CMD) up -d
 
 dev-init:
 	$(DOCKER_COMPOSE_CMD) exec banality-php $(COMPOSER_CMD) install
