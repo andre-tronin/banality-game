@@ -15,30 +15,37 @@ class RoundStats
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
-    private $word;
+    private string $word;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", nullable=false)
      */
-    private $count;
+    private int $count;
 
     /**
      * @ORM\ManyToOne(targetEntity=Round::class, inversedBy="words")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $round;
+    private Round $round;
 
-    public function getId(): ?int
+    public function __construct(string $word, int $count, Round $round)
+    {
+        $this->word = $word;
+        $this->count = $count;
+        $this->round = $round;
+    }
+
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getWord(): ?string
+    public function getWord(): string
     {
         return $this->word;
     }
@@ -50,7 +57,7 @@ class RoundStats
         return $this;
     }
 
-    public function getCount(): ?int
+    public function getCount(): int
     {
         return $this->count;
     }
@@ -62,12 +69,12 @@ class RoundStats
         return $this;
     }
 
-    public function getRound(): ?Round
+    public function getRound(): Round
     {
         return $this->round;
     }
 
-    public function setRound(?Round $round): self
+    public function setRound(Round $round): self
     {
         $this->round = $round;
 

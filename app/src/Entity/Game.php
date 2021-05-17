@@ -36,6 +36,7 @@ class Game
 
     /**
      * @ORM\OneToMany(targetEntity=Round::class, mappedBy="game", orphanRemoval=true)
+     * @ORM\OrderBy({"id" = "ASC"})
      */
     private Collection $rounds;
 

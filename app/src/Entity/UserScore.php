@@ -20,19 +20,26 @@ class UserScore
     /**
      * @ORM\Column(type="smallint")
      */
-    private $score;
+    private int $score;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    private $user;
+    private User $user;
 
     /**
      * @ORM\ManyToOne(targetEntity=Game::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    private $game;
+    private Game $game;
+
+    public function __construct(int $score, User $user, Game $game)
+    {
+        $this->score = $score;
+        $this->user = $user;
+        $this->game = $game;
+    }
 
     public function getId(): ?int
     {

@@ -4,7 +4,9 @@ namespace App\Service;
 
 use App\Entity\Game;
 use App\Entity\Round;
+use App\Entity\RoundStats;
 use App\Entity\User;
+use App\Entity\UserScore;
 use App\Entity\Word;
 use App\Repository\UserScoreRepository;
 use App\Repository\WordRepository;
@@ -78,7 +80,7 @@ class GameService
 
     public function getUsersWithWord(Round $round): array
     {
-        $result = $this->wordRepository->findAllForCurrentWord($round);
+        $result = $this->wordRepository->findAllForCurrentWord($round, $round->getCurrentWord()->getWord());
 
         return array_map(function (Word $word) {
             return $word->getUser()->getNickname();
@@ -89,6 +91,77 @@ class GameService
     {
         if (!$game->getUsers()->contains($user)) {
             $game->addUser($user);
+            $this->entityManager->persist(new UserScore(0, $user, $game));
+            $this->entityManager->flush();
+        }
+    }
+
+    public function startGame(Game $game)
+    {
+        $game->setStatus(Game::STATUS_OPEN);
+        $game->setCurrentRound($game->getRounds()->first());
+        $this->entityManager->flush();
+    }
+
+    public function calculateRound(Game $game): void
+    {
+        foreach ($this->wordRepository->countAllForCurrentRound($game->getCurrentRound()) as $entry) {
+            $roundStats = new RoundStats($entry['word'], $entry['amount'], $game->getCurrentRound());
+            $this->entityManager->persist($roundStats);
+            if ($game->getCurrentRound()->getCurrentWord() === null) {
+                $game->getCurrentRound()->setCurrentWord($roundStats);
+            }
+        }
+
+        $game->setStatus(Game::STATUS_CLOSE);
+        $this->entityManager->flush();
+    }
+
+    public function calculateCurrentWord(Round $currentRound): void
+    {
+        $currentRound->getWords()->removeElement($currentRound->getCurrentWord());
+        $currentWord = $currentRound->getWords()->first();
+        if ($currentWord->getCount() === 1) {
+            $words = [];
+            foreach ($currentRound->getWords() as $roundStats) {
+                $words[] = $roundStats->getWord();
+                $this->addPointsToUsers($roundStats, $currentRound->getGame()->getUsers()->count(), $currentRound, false);
+            }
+            $currentRound->getWords()->clear();
+            $megaWord = new RoundStats(implode(', ', $words), 0, $currentRound);
+            $this->entityManager->persist($megaWord);
+            $currentRound->setCurrentWord($megaWord);
+        } else {
+            $this->addPointsToUsers($currentWord, $currentRound->getGame()->getUsers()->count(), $currentRound, false);
+            $currentRound->setCurrentWord($currentWord);
+        }
+        $this->entityManager->flush();
+    }
+
+    public function nextRound(Game $game): void
+    {
+        $game->setCurrentRound($game->getRounds()->get($game->getRounds()->indexOf($game->getCurrentRound()) + 1));
+        $game->setStatus(Game::STATUS_OPEN);
+        $this->entityManager->flush();
+    }
+
+    public function endGame(Game $game)
+    {
+        $game->setStatus(Game::STATUS_END);
+        $this->entityManager->flush();
+    }
+
+    public function addPointsToUsers(RoundStats $currentWord, int $allUsers, Round $round, bool $flush): void
+    {
+        $amount = $currentWord->getCount();
+        $word = $currentWord->getWord();
+        if ($amount < $allUsers) {
+            foreach ($this->wordRepository->findAllForCurrentWord($round, $word) as $userWord) {
+                $userScore = $this->userScoreRepository->findOneBy(['user' => $userWord->getUser(), 'game' => $round->getGame()]);
+                $userScore->setScore($userScore->getScore() + $amount);
+            }
+        }
+        if ($flush) {
             $this->entityManager->flush();
         }
     }

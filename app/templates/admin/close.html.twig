@@ -1,0 +1,21 @@
+{% extends 'admin/index.html.twig' %}
+{% block content %}
+	<div class="alert alert-warning center" role="alert">
+		<h5>word</h5>
+		<h3>{{ currentWord }}</h3>
+	</div>
+	<div class="alert alert-danger center" role="alert">
+		<h5>players</h5>
+		<h3>{{ usersWithCurrentWord }}</h3>
+	</div>
+
+	<div class="alert alert-info center" role="alert">
+		<h5>topic</h5>
+		<h3>{{ topic }}</h3>
+	</div>
+
+	<form action="" method="post">
+		<input type="hidden" name="{{ buttonAction }}"><br>
+		<input type="submit" value="{{ buttonName }}">
+	</form>
+{% endblock %}

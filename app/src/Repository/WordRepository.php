@@ -24,14 +24,29 @@ class WordRepository extends ServiceEntityRepository
     /**
      * @return Word[] Returns an array of Word objects
      */
-    public function findAllForCurrentWord(Round $round): array
+    public function findAllForCurrentWord(Round $round, string $word): array
     {
         return $this->createQueryBuilder('w')
             ->andWhere('w.round = :round')
             ->andWhere('w.word = :word')
             ->setParameter('round', $round)
-            ->setParameter('word', $round->getCurrentWord()->getWord())
+            ->setParameter('word', $word)
             ->orderBy('w.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return [] sorted array of [amount,word]
+     */
+    public function countAllForCurrentRound(Round $round): array
+    {
+        return $this->createQueryBuilder('w')
+        ->select('COUNT(w.id) as amount', 'w.word')
+            ->andWhere('w.round = :round')
+            ->setParameter('round', $round)
+            ->groupBy('w.word')
+            ->orderBy('amount', 'DESC')
             ->getQuery()
             ->getResult();
     }
