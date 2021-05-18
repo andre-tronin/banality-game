@@ -22,7 +22,7 @@ class UserController extends AbstractController
     }
 
     #[
-        Route('/{game_id}', name: 'user'),
+        Route('/{game_id}', name: 'user', requirements: ['game_id' => '^[a-z]+-[a-z]+-[a-z]+$']),
         Entity('game', expr: 'repository.find(game_id)'),
         IsGranted(GameVoter::PLAY, subject: 'game')
     ]

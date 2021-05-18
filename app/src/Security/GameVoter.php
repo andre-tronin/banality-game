@@ -52,11 +52,6 @@ class GameVoter extends Voter
 
     private function canPlay(Game $game, User $user): bool
     {
-        // if they can admin, they can play
-        if ($this->canAdmin($game, $user)) {
-            return true;
-        }
-
         return $game->getUsers()->contains($user);
     }
 

@@ -165,4 +165,20 @@ class GameService
             $this->entityManager->flush();
         }
     }
+
+    public function createNewGame(User $user): Game
+    {
+        $value = file_get_contents(__DIR__.'/../../data/game_id_generator_list/animals.txt');
+
+        $lines = explode("\n", $value);
+        for ($i = 0; $i < 3; ++$i) {
+            $animals[] = trim($lines[random_int(0, \count($lines) - 1)]);
+        }
+        $game = new Game(implode('-', $animals), $user);
+
+        $this->entityManager->persist($game);
+        $this->entityManager->flush();
+
+        return $game;
+    }
 }

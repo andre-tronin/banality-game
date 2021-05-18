@@ -22,7 +22,7 @@ class AdminController extends AbstractController
     }
 
     #[
-        Route('/{game_id}/admin', name: 'admin'),
+        Route('/{game_id}/admin', name: 'admin', requirements: ['game_id' => '^[a-z]+-[a-z]+-[a-z]+$']),
         Entity('game', expr: 'repository.find(game_id)'),
         IsGranted(GameVoter::ADMIN, subject: 'game')
     ]

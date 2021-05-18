@@ -19,10 +19,9 @@ class Game
 
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string")
      */
-    private int $id;
+    private string $id;
 
     /**
      * @ORM\Column(type="string", columnDefinition="ENUM('start', 'open', 'close', 'end')"), nullable=true)
@@ -47,18 +46,20 @@ class Game
     private ?Round $currentRound;
 
     /**
-     * @ORM\OneToOne(targetEntity=User::class)
+     * @ORM\ManyToOne(targetEntity=User::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private User $admin;
 
-    public function __construct()
+    public function __construct(string $id, User $admin)
     {
         $this->users = new ArrayCollection();
         $this->rounds = new ArrayCollection();
+        $this->id = $id;
+        $this->admin = $admin;
     }
 
-    public function getId(): int
+    public function getId(): string
     {
         return $this->id;
     }

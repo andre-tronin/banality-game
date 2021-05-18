@@ -16,8 +16,7 @@ class GameFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager)
     {
         $user = $this->getReference('user');
-        $game = new Game();
-        $game->setAdmin($this->getReference('admin'));
+        $game = new Game('fish-duck-rock', $this->getReference('admin'));
         $game->setStatus(Game::STATUS_OPEN);
         $game->addUser($user);
         $manager->persist($game);
@@ -34,16 +33,10 @@ class GameFixtures extends Fixture implements DependentFixtureInterface
         $round2->setGame($game);
         $manager->persist($round2);
 
-        $roundStat = new RoundStats();
-        $roundStat->setCount(1);
-        $roundStat->setRound($round1);
-        $roundStat->setWord('sample');
+        $roundStat = new RoundStats('sample', 1, $round1);
         $manager->persist($roundStat);
 
-        $userScore = new UserScore();
-        $userScore->setGame($game);
-        $userScore->setUser($user);
-        $userScore->setScore(20);
+        $userScore = new UserScore(20, $user, $game);
         $manager->persist($userScore);
 
         $round1->setCurrentWord($roundStat);
