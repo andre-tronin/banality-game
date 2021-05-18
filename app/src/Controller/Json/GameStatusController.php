@@ -16,6 +16,10 @@ class GameStatusController extends AbstractController
 {
     public function __invoke(Game $game): Response
     {
+        if ($game->getStatus() === Game::STATUS_CLOSE) {
+            return $this->json($game->getCurrentRound()->getCurrentWord()->getWord());
+        }
+
         return $this->json($game->getStatus());
     }
 }
