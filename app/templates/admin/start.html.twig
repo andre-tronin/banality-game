@@ -1,7 +1,11 @@
 {% extends 'admin/index.html.twig' %}
 {% block content %}
-<form method="post">
-	<input type="hidden" name="start"><br>
-	<input type="submit" value="Start the game">
-</form>
+	<div>
+		<input type="text" value="{{ url('user', {'game_id': game.id}) }}">
+		<button data-controller="clipboard">Copy to clipboard</button>
+	</div>
+	<form method="post">
+		<input type="hidden" name="start"><br>
+		<input type="submit" value="Start the game">
+	</form>
 {% endblock %}

@@ -22,27 +22,29 @@ class Round
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $topic;
+    private string $topic;
 
     /**
      * @ORM\OneToMany(targetEntity=RoundStats::class, mappedBy="round", orphanRemoval=true)
      */
-    private $words;
+    private Collection $words;
 
     /**
      * @ORM\OneToOne(targetEntity=RoundStats::class, cascade={"persist", "remove"})
      */
-    private $currentWord;
+    private ?RoundStats $currentWord;
 
     /**
      * @ORM\ManyToOne(targetEntity=Game::class, inversedBy="rounds")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $game;
+    private Game $game;
 
-    public function __construct()
+    public function __construct(string $topic, Game $game)
     {
         $this->words = new ArrayCollection();
+        $this->topic = $topic;
+        $this->game = $game;
     }
 
     public function getId(): ?int

@@ -21,16 +21,12 @@ class GameFixtures extends Fixture implements DependentFixtureInterface
         $game->addUser($user);
         $manager->persist($game);
 
-        $round1 = new Round();
-        $round1->setTopic('topic one');
-        $round1->setGame($game);
+        $round1 = new Round('topic one', $game);
         $manager->persist($round1);
 
         $game->setCurrentRound($round1);
 
-        $round2 = new Round();
-        $round2->setTopic('topic two');
-        $round2->setGame($game);
+        $round2 = new Round('topic two', $game);
         $manager->persist($round2);
 
         $roundStat = new RoundStats('sample', 1, $round1);

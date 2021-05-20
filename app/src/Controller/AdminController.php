@@ -40,7 +40,7 @@ class AdminController extends AbstractController
             case Game::STATUS_END:
                 return $this->endAction($userStats);
             default:
-                return $this->endAction($userStats);
+                return $this->createAction($game, $userStats, $request);
         }
     }
 
@@ -55,6 +55,7 @@ class AdminController extends AbstractController
         return $this->render('admin/start.html.twig', [
             'userStats' => $userStats,
             'currentRoundNumber' => $currentRoundNumber,
+            'game' => $game,
         ]);
     }
 
@@ -117,6 +118,19 @@ class AdminController extends AbstractController
     public function endAction(array $userStats): Response
     {
         return $this->render('admin/end.html.twig', [
+            'userStats' => $userStats,
+        ]);
+    }
+
+    public function createAction(Game $game, array $userStats, Request $request): Response
+    {
+        if ($request->isMethod(Request::METHOD_POST) && $request->request->has('rounds')) {
+            $this->gameService->addRounds($game, $request->request->get('rounds'));
+
+            return $this->redirectToRoute('admin', ['game_id' => $game->getId()]);
+        }
+
+        return $this->render('admin/create.html.twig', [
             'userStats' => $userStats,
         ]);
     }

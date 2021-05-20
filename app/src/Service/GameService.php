@@ -181,4 +181,18 @@ class GameService
 
         return $game;
     }
+
+    public function addRounds(Game $game, array $rounds): void
+    {
+        foreach ($rounds as $roundTopic) {
+            if (empty(trim($roundTopic)) === false) {
+                $round = new Round(trim($roundTopic), $game);
+                $this->entityManager->persist($round);
+                $game->addRound($round);
+            }
+        }
+        $game->setStatus(Game::STATUS_START);
+
+        $this->entityManager->flush();
+    }
 }
