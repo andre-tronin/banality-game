@@ -13,7 +13,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class GameFixtures extends Fixture implements DependentFixtureInterface
 {
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $user = $this->getReference('user');
         $game = new Game('fish-duck-rock', $this->getReference('admin'));
@@ -42,7 +42,10 @@ class GameFixtures extends Fixture implements DependentFixtureInterface
         $manager->flush();
     }
 
-    public function getDependencies()
+    /**
+     * @return string[]
+     */
+    public function getDependencies(): array
     {
         return [
             UserFixtures::class,

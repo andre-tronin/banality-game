@@ -2,6 +2,7 @@
 
 namespace App\Tests\Service;
 
+use App\Entity\Game;
 use App\Entity\Round;
 use App\Entity\User;
 use App\Repository\UserScoreRepository;
@@ -22,6 +23,6 @@ class GameServiceTest extends TestCase
 
         $gameService = new GameService($entityManager, $userScoreRepository, $wordRepository);
 
-        $this->assertSame('max_reached', $gameService->addWord(new Round(), new User(), ''));
+        $this->assertSame('max_reached', $gameService->addWord(new Round('topic', new Game('fox-duck-fish', new User())), new User(), ''));
     }
 }

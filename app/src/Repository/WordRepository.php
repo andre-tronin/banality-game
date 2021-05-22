@@ -13,6 +13,8 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Word|null findOneBy(array $criteria, array $orderBy = null)
  * @method Word[]    findAll()
  * @method Word[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ *
+ * @extends ServiceEntityRepository<Word>
  */
 class WordRepository extends ServiceEntityRepository
 {
@@ -37,7 +39,7 @@ class WordRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return [] sorted array of [amount,word]
+     * @return array<int, array<string, string|int>> sorted array of [amount,word]
      */
     public function countAllForCurrentRound(Round $round): array
     {

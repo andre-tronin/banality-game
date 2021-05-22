@@ -56,12 +56,15 @@ php-cs-check:
 php-cs-fix:
 	$(DOCKER_COMPOSE_CMD) exec -e PHP_CS_FIXER_FUTURE_MODE=1 banality-php $(PHP_CS_FIXER_CMD) fix
 
+phpstan:
+	$(DOCKER_COMPOSE_CMD) exec banality-php vendor/bin/phpstan -vv analyse
+
 php-unit:
 	$(DOCKER_COMPOSE_CMD) exec banality-php $(SYMFONY_PHPUNIT) --verbose
 
 php-unit-coverage:
 	$(DOCKER_COMPOSE_CMD) exec -e XDEBUG_MODE=coverage banality-php $(SYMFONY_PHPUNIT) --verbose --coverage-text
 
-dev-check: php-cs-check php-unit
+dev-check: php-cs-check phpstan php-unit
 
-.PHONY: dev-up dev-init dev-down dev-stop dev-cli cache-clear frontend-dev frontend-prod frontend-update frontend-cli dev-watch php-cs-check php-cs-fix php-unit php-unit-coverage dev-check
+.PHONY: dev-up dev-init dev-down dev-stop dev-cli cache-clear frontend-dev frontend-prod frontend-update frontend-cli dev-watch php-cs-check php-cs-fix phpstan php-unit php-unit-coverage dev-check

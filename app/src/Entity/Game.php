@@ -30,12 +30,16 @@ class Game
 
     /**
      * @ORM\ManyToMany(targetEntity=User::class)
+     *
+     * @var Collection<int, User>
      */
     private Collection $users;
 
     /**
      * @ORM\OneToMany(targetEntity=Round::class, mappedBy="game", orphanRemoval=true)
      * @ORM\OrderBy({"id" = "ASC"})
+     *
+     * @var Collection<int, Round>
      */
     private Collection $rounds;
 
@@ -77,7 +81,7 @@ class Game
     }
 
     /**
-     * @return Collection|User[]
+     * @return Collection<int, User>|User[]
      */
     public function getUsers(): Collection
     {
@@ -101,7 +105,7 @@ class Game
     }
 
     /**
-     * @return Collection|Round[]
+     * @return Collection<int, Round>|Round[]
      */
     public function getRounds(): Collection
     {

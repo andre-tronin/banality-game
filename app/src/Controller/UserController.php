@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Game;
+use App\Entity\UserScore;
 use App\Security\GameVoter;
 use App\Service\GameService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
@@ -43,6 +44,9 @@ class UserController extends AbstractController
         }
     }
 
+    /**
+     * @param UserScore[] $userStats
+     */
     public function startAction(Game $game, array $userStats): Response
     {
         $this->gameService->addUser($game, $this->getUser());
@@ -52,6 +56,9 @@ class UserController extends AbstractController
         ]);
     }
 
+    /**
+     * @param UserScore[] $userStats
+     */
     public function openAction(Game $game, array $userStats, Request $request): Response
     {
         if ($request->isMethod(Request::METHOD_POST)) {
@@ -66,6 +73,9 @@ class UserController extends AbstractController
         ]);
     }
 
+    /**
+     * @param UserScore[] $userStats
+     */
     public function closeAction(Game $game, array $userStats): Response
     {
         return $this->render('user/close.html.twig', [
@@ -77,6 +87,9 @@ class UserController extends AbstractController
         ]);
     }
 
+    /**
+     * @param UserScore[] $userStats
+     */
     public function endAction(array $userStats): Response
     {
         return $this->render('user/end.html.twig', [

@@ -17,7 +17,7 @@ class Round
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -26,6 +26,8 @@ class Round
 
     /**
      * @ORM\OneToMany(targetEntity=RoundStats::class, mappedBy="round", orphanRemoval=true)
+     *
+     * @var Collection<int, RoundStats>
      */
     private Collection $words;
 
@@ -65,7 +67,7 @@ class Round
     }
 
     /**
-     * @return Collection|RoundStats[]
+     * @return Collection<int, RoundStats>|RoundStats[]
      */
     public function getWords(): Collection
     {
@@ -84,12 +86,7 @@ class Round
 
     public function removeWord(RoundStats $word): self
     {
-        if ($this->words->removeElement($word)) {
-            // set the owning side to null (unless already changed)
-            if ($word->getRound() === $this) {
-                $word->setRound(null);
-            }
-        }
+        $this->words->removeElement($word);
 
         return $this;
     }

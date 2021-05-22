@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Game;
+use App\Entity\UserScore;
 use App\Security\GameVoter;
 use App\Service\GameService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
@@ -44,6 +45,9 @@ class AdminController extends AbstractController
         }
     }
 
+    /**
+     * @param UserScore[] $userStats
+     */
     public function startAction(Game $game, array $userStats, int $currentRoundNumber, Request $request): Response
     {
         if ($request->isMethod(Request::METHOD_POST) && $request->request->has('start')) {
@@ -59,6 +63,9 @@ class AdminController extends AbstractController
         ]);
     }
 
+    /**
+     * @param UserScore[] $userStats
+     */
     public function openAction(Game $game, array $userStats, int $currentRoundNumber, Request $request): Response
     {
         if ($request->isMethod(Request::METHOD_POST) && $request->request->has('calculateRound')) {
@@ -76,6 +83,9 @@ class AdminController extends AbstractController
         ]);
     }
 
+    /**
+     * @param UserScore[] $userStats
+     */
     public function closeAction(Game $game, array $userStats, int $currentRoundNumber, Request $request): Response
     {
         $currentRound = $game->getCurrentRound();
@@ -115,6 +125,9 @@ class AdminController extends AbstractController
         ]);
     }
 
+    /**
+     * @param UserScore[] $userStats
+     */
     public function endAction(array $userStats): Response
     {
         return $this->render('admin/end.html.twig', [
@@ -122,6 +135,9 @@ class AdminController extends AbstractController
         ]);
     }
 
+    /**
+     * @param UserScore[] $userStats
+     */
     public function createAction(Game $game, array $userStats, Request $request): Response
     {
         if ($request->isMethod(Request::METHOD_POST) && $request->request->has('rounds')) {

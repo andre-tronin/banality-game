@@ -29,11 +29,17 @@ class GameService
         $this->entityManager = $entityManager;
     }
 
+    /**
+     * @return UserScore[]
+     */
     public function getUserStats(Game $game): array
     {
         return $this->userScoreRepository->findByGame($game);
     }
 
+    /**
+     * @return Word[]
+     */
     public function getUserWords(Round $round, User $user): array
     {
         return $this->wordRepository->findAllForRoundAndUser($user, $round);
@@ -78,6 +84,9 @@ class GameService
         return null;
     }
 
+    /**
+     * @return string[]
+     */
     public function getUsersWithWord(Round $round): array
     {
         $result = $this->wordRepository->findAllForCurrentWord($round, $round->getCurrentWord()->getWord());
@@ -96,7 +105,7 @@ class GameService
         }
     }
 
-    public function startGame(Game $game)
+    public function startGame(Game $game): void
     {
         $game->setStatus(Game::STATUS_OPEN);
         $game->setCurrentRound($game->getRounds()->first());
@@ -145,7 +154,7 @@ class GameService
         $this->entityManager->flush();
     }
 
-    public function endGame(Game $game)
+    public function endGame(Game $game): void
     {
         $game->setStatus(Game::STATUS_END);
         $this->entityManager->flush();
@@ -171,6 +180,7 @@ class GameService
         $value = file_get_contents(__DIR__.'/../../data/game_id_generator_list/animals.txt');
 
         $lines = explode("\n", $value);
+        $animals = [];
         for ($i = 0; $i < 3; ++$i) {
             $animals[] = trim($lines[random_int(0, \count($lines) - 1)]);
         }
@@ -182,6 +192,9 @@ class GameService
         return $game;
     }
 
+    /**
+     * @param string[] $rounds
+     */
     public function addRounds(Game $game, array $rounds): void
     {
         foreach ($rounds as $roundTopic) {
