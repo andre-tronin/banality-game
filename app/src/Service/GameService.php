@@ -12,21 +12,25 @@ use App\Repository\UserScoreRepository;
 use App\Repository\WordRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Finder\Finder;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class GameService
 {
     private UserScoreRepository $userScoreRepository;
     private WordRepository $wordRepository;
     private EntityManagerInterface $entityManager;
+    private TranslatorInterface $translator;
 
     public function __construct(
         EntityManagerInterface $entityManager,
         UserScoreRepository $userScoreRepository,
-        WordRepository $wordRepository
+        WordRepository $wordRepository,
+        TranslatorInterface $translator
     ) {
         $this->userScoreRepository = $userScoreRepository;
         $this->wordRepository = $wordRepository;
         $this->entityManager = $entityManager;
+        $this->translator = $translator;
     }
 
     /**
@@ -47,14 +51,14 @@ class GameService
 
     public function addWord(Round $round, User $user, string $word): ?string
     {
-        $matched = preg_match('/^\\w+/', mb_strtolower(trim($word)), $matches);
+        $matched = preg_match('/^\w+/', mb_strtolower(trim($word)), $matches);
         $word = $matches[0] ?? '';
         $words = $this->getUserWords($round, $user);
         if (\count($words) > 9) {
-            return 'max_reached';
+            return $this->translator->trans('add_word.max_reached');
         }
         if ($matched === 0 && $word === '') {
-            return 'word_empty';
+            return $this->translator->trans('add_word.word_empty');
         }
         if (!empty(array_filter(
             $words,
@@ -62,7 +66,7 @@ class GameService
                 return $item->getWord() === $word;
             }
         ))) {
-            return 'already_submitted'.htmlspecialchars($word, \ENT_QUOTES, 'UTF-8');
+            return $this->translator->trans('add_word.already_submitted', ['word' => htmlspecialchars($word, \ENT_QUOTES, 'UTF-8')]);
         }
 
         if ($round->getGame()->isUseDictionary()) {
@@ -71,7 +75,7 @@ class GameService
                 if ($file->getFilename() === $round->getGame()->getLocale().'.txt') {
                     $dict = $file->getContents();
                     if (strstr($dict, $word."\n") === false) {
-                        return 'not_found'.htmlspecialchars($word, \ENT_QUOTES, 'UTF-8');
+                        return $this->translator->trans('add_word.not_found', ['word' => htmlspecialchars($word, \ENT_QUOTES, 'UTF-8')]);
                     } else {
                         $wordEntity = new Word($word, $user, $round);
                         break;
@@ -207,7 +211,7 @@ class GameService
     {
         foreach ($rounds as $roundTopic) {
             if (empty(trim($roundTopic)) === false) {
-                $round = new Round(trim($roundTopic), $game);
+                $round = new Round(htmlspecialchars(trim($roundTopic), \ENT_QUOTES, 'UTF-8'), $game);
                 $this->entityManager->persist($round);
                 $game->addRound($round);
             }

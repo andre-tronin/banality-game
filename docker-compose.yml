@@ -13,8 +13,11 @@ services:
             - banality-db
     banality-php:
         container_name: banality-php
-        build: ./docker/php-fpm
-        user: ${UID_GID}
+        build: 
+            context: ./docker/php-fpm
+            args:
+                UID: ${CURRENT_UID}
+                GID: ${CURRENT_GID}
         volumes:
             - ~/.composer:/home/www-data/.composer
             - ./app:/var/www/symfony:cached

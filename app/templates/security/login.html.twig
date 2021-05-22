@@ -1,29 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}
+	{{ 'index.login.title'|trans }}
+{% endblock %}
+
 
 {% block body %}
-  <form method="post">
-    {% if error %}
-      <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+	<form method="post">
+		{% if error %}
+			<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+		{% endif %}
 
-    {% if app.user %}
-      <div class="mb-3">
-        You are logged in as
-        {{ app.user.username }},
-        <a href="{{ path('app_logout') }}">Logout</a>
-      </div>
-    {% endif %}
+		<h1 class="h3 mb-3 font-weight-normal">{{ 'index.please_sign_in'|trans }}</h1>
+		<input type="text" name="nickname" id="inputNickname" class="form-control" placeholder="{{ 'index.nickname'|trans }}" required="required" autofocus="autofocus">
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputNickname" class="sr-only">Nickname</label>
-    <input type="text" name="nickname" id="inputNickname" class="form-control" placeholder="Nickname" required="required" autofocus="autofocus">
+		<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-    <button class="btn btn-lg btn-primary" type="submit">
-      Sign in
-    </button>
-  </form>
+		<button class="btn btn-lg btn-primary" type="submit">
+			{{ 'index.enter'|trans }}
+		</button>
+	</form>
 {% endblock %}

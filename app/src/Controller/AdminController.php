@@ -12,14 +12,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class AdminController extends AbstractController
 {
     private GameService $gameService;
+    private TranslatorInterface $translator;
 
-    public function __construct(GameService $gameService)
+    public function __construct(GameService $gameService, TranslatorInterface $translator)
     {
         $this->gameService = $gameService;
+        $this->translator = $translator;
     }
 
     #[
@@ -104,13 +107,13 @@ class AdminController extends AbstractController
         }
         if ($currentRound->getCurrentWord()->getCount() !== 0) {
             $buttonAction = 'calculateCurrentWord';
-            $buttonName = 'next word';
+            $buttonName = $this->translator->trans('admin.next_word');
         } elseif ($game->getRounds()->last() === $currentRound) {
             $buttonAction = 'end';
-            $buttonName = 'end game';
+            $buttonName = $this->translator->trans('admin.end_game');
         } else {
             $buttonAction = 'nextRound';
-            $buttonName = 'next round';
+            $buttonName = $this->translator->trans('admin.next_round');
         }
 
         return $this->render('admin/close.html.twig', [

@@ -7,10 +7,12 @@ CURRENT_UID := $(shell id -u)
 CURRENT_GID := $(shell id -g)
 BASE_DIR := $(shell pwd)
 NODE_CMD=docker run -it --rm -w /var/src -v $(BASE_DIR)/app:/var/src node:16-alpine
+export CURRENT_UID
+export CURRENT_GID
 
 dev-up:
-	UID_GID="$(CURRENT_UID):$(CURRENT_GID)" $(DOCKER_COMPOSE_CMD) build
-	UID_GID="$(CURRENT_UID):$(CURRENT_GID)" $(DOCKER_COMPOSE_CMD) up -d
+	$(DOCKER_COMPOSE_CMD) build
+	$(DOCKER_COMPOSE_CMD) up -d
 
 dev-init:
 	$(DOCKER_COMPOSE_CMD) exec banality-php $(COMPOSER_CMD) install
@@ -50,6 +52,11 @@ frontend-cli:
 dev-watch:
 	$(NODE_CMD) yarn watch
 
+dev-trans-update:
+	$(DOCKER_COMPOSE_CMD) exec banality-php $(SYMFONY_CMD) translation:update --force --output-format=yaml --sort=asc ru
+	$(DOCKER_COMPOSE_CMD) exec banality-php $(SYMFONY_CMD) translation:update --force --output-format=yaml --sort=asc de
+	$(DOCKER_COMPOSE_CMD) exec banality-php $(SYMFONY_CMD) translation:update --force --output-format=yaml --sort=asc en
+
 php-cs-check:
 	$(DOCKER_COMPOSE_CMD) exec -e PHP_CS_FIXER_FUTURE_MODE=1 banality-php $(PHP_CS_FIXER_CMD) fix --verbose --diff --dry-run
 
@@ -67,4 +74,4 @@ php-unit-coverage:
 
 dev-check: php-cs-check phpstan php-unit
 
-.PHONY: dev-up dev-init dev-down dev-stop dev-cli cache-clear frontend-dev frontend-prod frontend-update frontend-cli dev-watch php-cs-check php-cs-fix phpstan php-unit php-unit-coverage dev-check
+.PHONY: dev-up dev-init dev-down dev-stop dev-cli cache-clear frontend-dev frontend-prod frontend-update frontend-cli dev-watch dev-trans-update php-cs-check php-cs-fix phpstan php-unit php-unit-coverage dev-check

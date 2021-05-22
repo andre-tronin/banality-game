@@ -5,16 +5,16 @@
 {% endblock %}
 {% block content %}
 	<div class="alert alert-warning center" role="alert">
-		<h5>word</h5>
+		<h5>{{ 'current_word'|trans }}</h5>
 		<h3>{{ currentWord }}</h3>
 	</div>
 	<div class="alert alert-danger center" role="alert">
-		<h5>players</h5>
+		<h5>{{ 'players'|trans }}</h5>
 		<h3>{{ usersWithCurrentWord }}</h3>
 	</div>
 
 	<div class="alert alert-info center" role="alert">
-		<h5>topic</h5>
+		<h5>{{ 'current_topic'|trans }}</h5>
 		<h3>{{ topic }}</h3>
 	</div>
 
