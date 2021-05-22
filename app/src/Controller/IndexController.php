@@ -14,7 +14,7 @@ class IndexController extends AbstractController
     public function index(Request $request, GameService $gameService): Response
     {
         if ($request->isMethod(Request::METHOD_POST) && $request->request->has('create')) {
-            $game = $gameService->createNewGame($this->getUser());
+            $game = $gameService->createNewGame($this->getUser(), $request->getLocale());
 
             return $this->redirectToRoute('admin', ['game_id' => $game->getId()]);
         }

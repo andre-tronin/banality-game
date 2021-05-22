@@ -187,7 +187,7 @@ class GameService
         }
     }
 
-    public function createNewGame(User $user): Game
+    public function createNewGame(User $user, string $locale): Game
     {
         $value = file_get_contents(__DIR__.'/../../data/game_id_generator_list/animals.txt');
 
@@ -196,7 +196,7 @@ class GameService
         for ($i = 0; $i < 3; ++$i) {
             $animals[] = trim($lines[random_int(0, \count($lines) - 1)]);
         }
-        $game = new Game(implode('-', $animals), $user);
+        $game = new Game(implode('-', $animals), $user, $locale);
 
         $this->entityManager->persist($game);
         $this->entityManager->flush();
