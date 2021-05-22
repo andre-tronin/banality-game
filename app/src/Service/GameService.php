@@ -47,10 +47,14 @@ class GameService
 
     public function addWord(Round $round, User $user, string $word): ?string
     {
-        $word = mb_strtolower(trim($word));
+        $matched = preg_match('/^\\w+/', mb_strtolower(trim($word)), $matches);
+        $word = $matches[0] ?? '';
         $words = $this->getUserWords($round, $user);
         if (\count($words) > 9) {
             return 'max_reached';
+        }
+        if ($matched === 0 && $word === '') {
+            return 'word_empty';
         }
         if (!empty(array_filter(
             $words,
@@ -61,21 +65,25 @@ class GameService
             return 'already_submitted'.htmlspecialchars($word, \ENT_QUOTES, 'UTF-8');
         }
 
-        $finder = new Finder();
-        $wordEntity = null;
-        foreach ($finder->files()->in(__DIR__.'/../../data/dictionary/') as $file) {
-            if ($file->getFilename() === 'russian_nouns.txt') {
-                $dict = $file->getContents();
-                if (strstr($dict, $word."\n") === false) {
-                    return 'not_found'.htmlspecialchars($word, \ENT_QUOTES, 'UTF-8');
-                } else {
-                    $wordEntity = new Word($word, $user, $round);
-                    break;
+        if ($round->getGame()->isUseDictionary()) {
+            $finder = new Finder();
+            foreach ($finder->files()->in(__DIR__.'/../../data/dictionary/') as $file) {
+                if ($file->getFilename() === $round->getGame()->getLocale().'.txt') {
+                    $dict = $file->getContents();
+                    if (strstr($dict, $word."\n") === false) {
+                        return 'not_found'.htmlspecialchars($word, \ENT_QUOTES, 'UTF-8');
+                    } else {
+                        $wordEntity = new Word($word, $user, $round);
+                        break;
+                    }
                 }
             }
-        }
-        if ($wordEntity === null) {
-            throw new \Exception('Dictionary not found');
+            if (!isset($wordEntity)) {
+                throw new \Exception('Dictionary not found');
+            }
+        } else {
+            //escape special caracter, because no dictionary filter used
+            $wordEntity = new Word(htmlspecialchars($word, \ENT_QUOTES, 'UTF-8'), $user, $round);
         }
 
         $this->entityManager->persist($wordEntity);

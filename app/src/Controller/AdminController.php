@@ -141,6 +141,7 @@ class AdminController extends AbstractController
     public function createAction(Game $game, array $userStats, Request $request): Response
     {
         if ($request->isMethod(Request::METHOD_POST) && $request->request->has('rounds')) {
+            $game->setUseDictionary((bool) $request->request->get('dictionary'));
             $this->gameService->addRounds($game, $request->request->get('rounds'));
 
             return $this->redirectToRoute('admin', ['game_id' => $game->getId()]);

@@ -24,9 +24,19 @@ class Game
     private string $id;
 
     /**
-     * @ORM\Column(type="string", columnDefinition="ENUM('start', 'open', 'close', 'end')"), nullable=true)
+     * @ORM\Column(type="string", columnDefinition="ENUM('start', 'open', 'close', 'end')", options={"default":null}, nullable=true)
      */
     private ?string $status;
+
+    /**
+     * @ORM\Column(type="string", columnDefinition="ENUM('ru', 'de', 'en')", options={"default":"en"}, nullable=false)
+     */
+    private string $locale;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true, options={"default":true})
+     */
+    private bool $useDictionary;
 
     /**
      * @ORM\ManyToMany(targetEntity=User::class)
@@ -55,12 +65,14 @@ class Game
      */
     private User $admin;
 
-    public function __construct(string $id, User $admin)
+    public function __construct(string $id, User $admin, string $locale = 'en', bool $useDictionary = true)
     {
         $this->users = new ArrayCollection();
         $this->rounds = new ArrayCollection();
         $this->id = $id;
         $this->admin = $admin;
+        $this->locale = $locale;
+        $this->useDictionary = $useDictionary;
     }
 
     public function getId(): string
@@ -154,6 +166,23 @@ class Game
     public function setAdmin(User $admin): self
     {
         $this->admin = $admin;
+
+        return $this;
+    }
+
+    public function getLocale(): string
+    {
+        return $this->locale;
+    }
+
+    public function isUseDictionary(): bool
+    {
+        return $this->useDictionary;
+    }
+
+    public function setUseDictionary(bool $useDictionary): self
+    {
+        $this->useDictionary = $useDictionary;
 
         return $this;
     }
