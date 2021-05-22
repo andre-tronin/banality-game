@@ -51,7 +51,7 @@ class GameService
 
     public function addWord(Round $round, User $user, string $word): ?string
     {
-        $matched = preg_match('/^\w+/', mb_strtolower(trim($word)), $matches);
+        $matched = preg_match('/(*UCP)^\\w+/u', mb_strtolower(trim($word)), $matches);
         $word = $matches[0] ?? '';
         $words = $this->getUserWords($round, $user);
         if (\count($words) > 9) {
