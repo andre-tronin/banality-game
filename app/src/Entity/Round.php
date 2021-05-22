@@ -9,6 +9,13 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=RoundRepository::class)
+ * @ORM\Table(
+ *    uniqueConstraints={
+ *        @ORM\UniqueConstraint(
+ *            name="game_topic",
+ *            columns={"game_id", "topic"}
+ *        )
+ *    })
  */
 class Round
 {
