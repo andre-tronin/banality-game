@@ -10,7 +10,7 @@ admin.submit_round_topics: 'загрузить задания'
 admin.end_round: 'закончить раунд'
 admin.copy_to_clipboard: 'скопировать ссылку'
 admin.start_game: 'начать игру'
-admin.hello: 'Привет {name}'
+admin.hello: 'Привет, {name}'
 admin.title: 'Банальности ведущий'
 index.welcome: Банальности
 admin.create_game: 'создать игру'
@@ -28,4 +28,4 @@ index.enter: войти
 user.title: Банальности
 user.word.placeholder: слово
 submit: отправить
-hello: привет, {name}!
+hello: 'Привет, {name}!'

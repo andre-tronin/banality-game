@@ -2,24 +2,30 @@ add_word.max_reached: 'you have already send max amount of words'
 add_word.already_submitted: 'you have already submitted the word "{word}"'
 add_word.word_empty: 'word should be not empty'
 add_word.not_found: 'word "{word}" is not found in the game''s dictionary'
-current_word: __current_word
-players: __players
-current_topic: __current_topic
-admin.use_dictionary: __admin.use_dictionary
-admin.submit_round_topics: __admin.submit_round_topics
-admin.end_round: __admin.end_round
-admin.copy_to_clipboard: __admin.copy_to_clipboard
-admin.start_game: __admin.start_game
-admin.hello: __admin.hello
-index.welcome: __index.welcome
-admin.create_game: __admin.create_game
-index.login.title: __index.login.title
-admin.create.title: __admin.create.title
-logout: __logout
-index.please_sign_in: __index.please_sign_in
-index.nickname: __index.nickname
-index.enter: __index.enter
-user.title: __user.title
-user.word.placeholder: __user.word.placeholder
-submit: __submit
-hello: __hello
+players: 'players'
+current_word: 'current word'
+current_topic: 'topic'
+admin.use_dictionary: 'use dictionary for player''s words'
+admin.submit_round_topics: 'submit round topics'
+admin.end_round: 'end round'
+admin.copy_to_clipboard: 'copy to clipboard'
+admin.start_game: 'start game'
+admin.hello: 'hello {name}!'
+index.welcome: 'banality game'
+admin.create_game: 'create game'
+index.login.title: login
+admin.create.title: 'new game'
+logout: logout
+index.please_sign_in: 'please sign in'
+index.nickname: 'nickname'
+index.enter: enter
+user.title: 'banality game'
+user.word.placeholder: word
+submit: submit
+hello: 'hello {name}!'
+admin.next_word: 'next word'
+admin.end_game: 'end game'
+admin.next_round: 'next round'
+error.game_access_denied: 'oops! the game is already started or even ended so you cannot enter anymore :('
+admin.title: 'banality game - admin'
+admin.round_number: 'round #{round_number}'
