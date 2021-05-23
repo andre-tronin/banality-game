@@ -11,6 +11,8 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Round|null findOneBy(array $criteria, array $orderBy = null)
  * @method Round[]    findAll()
  * @method Round[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ *
+ * @extends ServiceEntityRepository<Round>
  */
 class RoundRepository extends ServiceEntityRepository
 {

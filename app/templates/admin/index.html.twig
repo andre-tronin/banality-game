@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello{{ app.user.username }}
+{% block title %}
+	{{ 'admin.title'|trans }}
 {% endblock %}
 
 {% block body %}
@@ -12,7 +13,7 @@
 		{% endfor %}
 	</ul>
 	{% if currentRoundNumber is defined %}
-		<p>(round{{ currentRoundNumber }})</p>
+		<p>{{ 'admin.round_number'|trans({'round_number': currentRoundNumber}) }}</p>
 	{% endif %}
 	{% block content %}{% endblock %}
 {% endblock %}

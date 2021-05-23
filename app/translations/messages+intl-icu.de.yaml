@@ -1,0 +1,31 @@
+current_word: Wort
+players: Spieler
+current_topic: Thema
+add_word.max_reached: 'Du hast schon die maximale Anzahl der Wörter erreicht'
+add_word.word_empty: 'Das Wort darf nicht leer sein'
+add_word.already_submitted: 'Das Wort "{word}" hast Du schon benutzt'
+add_word.not_found: 'Das Wort "{word}" wurde im Wörterbuch nicht gefunden'
+admin.use_dictionary: 'Wörter der Spieler im Wörterbuch nachschlagen'
+admin.submit_round_topics: 'Die Aufgaben abschicken'
+admin.end_round: 'Die Runde beenden'
+admin.copy_to_clipboard: 'Den Link kopieren'
+admin.start_game: 'Das Spiel starten'
+admin.hello: 'Hallo {name}!'
+admin.title: 'Die Banalitäten - Admin'
+index.welcome: 'Die Banalitäten'
+admin.create_game: 'Ein neues Spiel erzeugen'
+index.login.title: 'Wie heißt Du?'
+admin.create.title: 'Neues Spiel'
+admin.round_number: 'Die {round_number}. Runde'
+admin.next_round: 'Nächste Runde'
+admin.next_word: 'Nächstes Wort'
+admin.end_game: 'Das Spiel beenden'
+error.game_access_denied: 'Hopla! Das Spiel hat bereits begonnen oder ist beendet und Du kannst leider nicht mehr beitreten :('
+logout: logout
+index.please_sign_in: 'Wähle einen Spitznamen'
+index.nickname: Spitzname
+index.enter: Eintreten
+user.title: Die Banalitäten
+user.word.placeholder: Wort
+submit: Senden
+hello: 'Hallo {name}!'

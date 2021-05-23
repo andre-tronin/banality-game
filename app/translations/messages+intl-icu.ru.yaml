@@ -1,0 +1,31 @@
+current_word: слово
+players: игроки
+current_topic: тема
+add_word.max_reached: 'ты уже отправил максимальное колличество слов'
+add_word.word_empty: 'впиши слово!'
+add_word.already_submitted: 'слово "{word}" ты уже использовал'
+add_word.not_found: 'слово "{word}" не найдено в словаре'
+admin.use_dictionary: 'использовать словарь в игре'
+admin.submit_round_topics: 'загрузить задания'
+admin.end_round: 'закончить раунд'
+admin.copy_to_clipboard: 'скопировать ссылку'
+admin.start_game: 'начать игру'
+admin.hello: 'Привет, {name}'
+admin.title: 'Банальности ведущий'
+index.welcome: Банальности
+admin.create_game: 'создать игру'
+index.login.title: Представься
+admin.create.title: 'Создание игры'
+admin.round_number: 'Раунд {round_number}'
+admin.next_round: 'Следующий раунд'
+admin.next_word: 'Следующее слово'
+admin.end_game: 'Закончить игру'
+error.game_access_denied: 'Ой! Игра уже идёт или закончилась: ты не можешь к ней присоединиться :('
+logout: выйти
+index.please_sign_in: 'Выбери имя'
+index.nickname: имя
+index.enter: войти
+user.title: Банальности
+user.word.placeholder: слово
+submit: отправить
+hello: 'Привет, {name}!'

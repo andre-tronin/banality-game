@@ -1,7 +1,7 @@
 {% extends 'user/index.html.twig' %}
 {% block content %}
 	<div class="alert alert-info center" role="alert">
-		<h5>topic</h5>
+		<h5>{{ 'current_topic'|trans }}</h5>
 		<h3>{{ topic }}</h3>
 	</div>
 
@@ -12,10 +12,10 @@
 	</ul>
 
 	{% if words|length < 10 %}
-		<form action="" method="post">
+		<form method="post">
 			<div class="form-group">
-				<input type="text" class="form-control" placeholder="word" name="word" autofocus><br>
-				<button type="submit" class="btn btn-success">submit</button>
+				<input type="text" class="form-control" placeholder="{{ 'user.word.placeholder'|trans }}" name="word" autofocus><br>
+				<button type="submit" class="btn btn-success">{{ 'submit'|trans }}</button>
 			</div>
 		</form>
 	{% else %}

@@ -1,13 +1,13 @@
 {% extends 'admin/index.html.twig' %}
 {% block content %}
 	<div class="alert alert-info center" role="alert">
-		<h5>topic</h5>
+		<h5>{{ 'current_topic'|trans }}</h5>
 		<h3>{{ topic }}</h3>
 	</div>
 
-<form action="" method="post">
+<form method="post">
 	<input type="hidden" name="calculateRound"><br>
-	<input type="submit" value="End round">
+	<input type="submit" value="{{ 'admin.end_round'|trans }}">
 </form>
 
 

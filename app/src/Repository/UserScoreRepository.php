@@ -12,6 +12,8 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method UserScore|null findOneBy(array $criteria, array $orderBy = null)
  * @method UserScore[]    findAll()
  * @method UserScore[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ *
+ * @extends ServiceEntityRepository<UserScore>
  */
 class UserScoreRepository extends ServiceEntityRepository
 {

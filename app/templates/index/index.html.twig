@@ -1,7 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello IndexController!
+{% block title %}
+	{{ 'index.welcome'|trans }}
 {% endblock %}
+
 
 {% block body %}
 	{% for message in app.flashes('note') %}
@@ -9,4 +11,8 @@
 			{{ message }}
 		</div>
 	{% endfor %}
+	<form method="post">
+		<input type="hidden" name="create"><br>
+		<input type="submit" value="{{ 'admin.create_game'|trans }}">
+	</form>
 {% endblock %}

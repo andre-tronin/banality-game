@@ -1,4 +1,21 @@
 doctrine:
+    dbal:
+        default_connection: default
+        connections:
+            default:
+                override_url: true
+                url: "%env(resolve:DATABASE_URL)%"
+                user: "%env(resolve:DATABASE_USER)%"
+                password: "%env(resolve:DATABASE_PASSWORD)%"
+                mapping_types:
+                    enum: string
+            migration:
+                override_url: true
+                url: "%env(resolve:DATABASE_URL)%"
+                user: "%env(resolve:DATABASE_USER_MIGRATION)%"
+                password: "%env(resolve:DATABASE_PASSWORD_MIGRATION)%"
+                mapping_types:
+                    enum: string
     orm:
         auto_generate_proxy_classes: false
         metadata_cache_driver:

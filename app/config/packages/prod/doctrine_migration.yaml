@@ -1,0 +1,3 @@
+doctrine_migrations:
+    # Connection to use for the migrations
+    connection: migration

@@ -19,24 +19,37 @@ class Game
 
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string")
      */
-    private int $id;
+    private string $id;
 
     /**
-     * @ORM\Column(type="string", columnDefinition="ENUM('start', 'open', 'close', 'end')"), nullable=true)
+     * @ORM\Column(type="string", columnDefinition="ENUM('start', 'open', 'close', 'end')", options={"default":null}, nullable=true)
      */
     private ?string $status;
 
     /**
+     * @ORM\Column(type="string", columnDefinition="ENUM('ru', 'de', 'en')", options={"default":"en"}, nullable=false)
+     */
+    private string $locale;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true, options={"default":true})
+     */
+    private bool $useDictionary;
+
+    /**
      * @ORM\ManyToMany(targetEntity=User::class)
+     *
+     * @var Collection<int, User>
      */
     private Collection $users;
 
     /**
      * @ORM\OneToMany(targetEntity=Round::class, mappedBy="game", orphanRemoval=true)
      * @ORM\OrderBy({"id" = "ASC"})
+     *
+     * @var Collection<int, Round>
      */
     private Collection $rounds;
 
@@ -47,18 +60,22 @@ class Game
     private ?Round $currentRound;
 
     /**
-     * @ORM\OneToOne(targetEntity=User::class)
+     * @ORM\ManyToOne(targetEntity=User::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private User $admin;
 
-    public function __construct()
+    public function __construct(string $id, User $admin, string $locale = 'en', bool $useDictionary = true)
     {
         $this->users = new ArrayCollection();
         $this->rounds = new ArrayCollection();
+        $this->id = $id;
+        $this->admin = $admin;
+        $this->locale = $locale;
+        $this->useDictionary = $useDictionary;
     }
 
-    public function getId(): int
+    public function getId(): string
     {
         return $this->id;
     }
@@ -76,7 +93,7 @@ class Game
     }
 
     /**
-     * @return Collection|User[]
+     * @return Collection<int, User>|User[]
      */
     public function getUsers(): Collection
     {
@@ -100,7 +117,7 @@ class Game
     }
 
     /**
-     * @return Collection|Round[]
+     * @return Collection<int, Round>|Round[]
      */
     public function getRounds(): Collection
     {
@@ -149,6 +166,23 @@ class Game
     public function setAdmin(User $admin): self
     {
         $this->admin = $admin;
+
+        return $this;
+    }
+
+    public function getLocale(): string
+    {
+        return $this->locale;
+    }
+
+    public function isUseDictionary(): bool
+    {
+        return $this->useDictionary;
+    }
+
+    public function setUseDictionary(bool $useDictionary): self
+    {
+        $this->useDictionary = $useDictionary;
 
         return $this;
     }

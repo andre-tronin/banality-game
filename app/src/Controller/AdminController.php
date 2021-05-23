@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Game;
+use App\Entity\UserScore;
 use App\Security\GameVoter;
 use App\Service\GameService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
@@ -11,18 +12,21 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class AdminController extends AbstractController
 {
     private GameService $gameService;
+    private TranslatorInterface $translator;
 
-    public function __construct(GameService $gameService)
+    public function __construct(GameService $gameService, TranslatorInterface $translator)
     {
         $this->gameService = $gameService;
+        $this->translator = $translator;
     }
 
     #[
-        Route('/{game_id}/admin', name: 'admin'),
+        Route('/{game_id}/admin', name: 'admin', requirements: ['game_id' => '^[a-z]+-[a-z]+-[a-z]+$']),
         Entity('game', expr: 'repository.find(game_id)'),
         IsGranted(GameVoter::ADMIN, subject: 'game')
     ]
@@ -40,10 +44,13 @@ class AdminController extends AbstractController
             case Game::STATUS_END:
                 return $this->endAction($userStats);
             default:
-                return $this->endAction($userStats);
+                return $this->createAction($game, $userStats, $request);
         }
     }
 
+    /**
+     * @param UserScore[] $userStats
+     */
     public function startAction(Game $game, array $userStats, int $currentRoundNumber, Request $request): Response
     {
         if ($request->isMethod(Request::METHOD_POST) && $request->request->has('start')) {
@@ -55,9 +62,13 @@ class AdminController extends AbstractController
         return $this->render('admin/start.html.twig', [
             'userStats' => $userStats,
             'currentRoundNumber' => $currentRoundNumber,
+            'game' => $game,
         ]);
     }
 
+    /**
+     * @param UserScore[] $userStats
+     */
     public function openAction(Game $game, array $userStats, int $currentRoundNumber, Request $request): Response
     {
         if ($request->isMethod(Request::METHOD_POST) && $request->request->has('calculateRound')) {
@@ -75,6 +86,9 @@ class AdminController extends AbstractController
         ]);
     }
 
+    /**
+     * @param UserScore[] $userStats
+     */
     public function closeAction(Game $game, array $userStats, int $currentRoundNumber, Request $request): Response
     {
         $currentRound = $game->getCurrentRound();
@@ -93,13 +107,13 @@ class AdminController extends AbstractController
         }
         if ($currentRound->getCurrentWord()->getCount() !== 0) {
             $buttonAction = 'calculateCurrentWord';
-            $buttonName = 'next word';
+            $buttonName = $this->translator->trans('admin.next_word');
         } elseif ($game->getRounds()->last() === $currentRound) {
             $buttonAction = 'end';
-            $buttonName = 'end game';
+            $buttonName = $this->translator->trans('admin.end_game');
         } else {
             $buttonAction = 'nextRound';
-            $buttonName = 'next round';
+            $buttonName = $this->translator->trans('admin.next_round');
         }
 
         return $this->render('admin/close.html.twig', [
@@ -114,9 +128,29 @@ class AdminController extends AbstractController
         ]);
     }
 
+    /**
+     * @param UserScore[] $userStats
+     */
     public function endAction(array $userStats): Response
     {
         return $this->render('admin/end.html.twig', [
+            'userStats' => $userStats,
+        ]);
+    }
+
+    /**
+     * @param UserScore[] $userStats
+     */
+    public function createAction(Game $game, array $userStats, Request $request): Response
+    {
+        if ($request->isMethod(Request::METHOD_POST) && $request->request->has('rounds')) {
+            $game->setUseDictionary((bool) $request->request->get('dictionary'));
+            $this->gameService->addRounds($game, $request->request->get('rounds'));
+
+            return $this->redirectToRoute('admin', ['game_id' => $game->getId()]);
+        }
+
+        return $this->render('admin/create.html.twig', [
             'userStats' => $userStats,
         ]);
     }

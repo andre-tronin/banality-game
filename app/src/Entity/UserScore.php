@@ -7,6 +7,13 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=UserScoreRepository::class)
+ * @ORM\Table(
+ *    uniqueConstraints={
+ *        @ORM\UniqueConstraint(
+ *            name="user_game",
+ *            columns={"user_id", "game_id"}
+ *        )
+ *    })
  */
 class UserScore
 {
@@ -15,7 +22,7 @@ class UserScore
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="smallint")

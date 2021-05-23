@@ -1,0 +1,31 @@
+add_word.max_reached: 'you have already send max amount of words'
+add_word.already_submitted: 'you have already submitted the word "{word}"'
+add_word.word_empty: 'word should be not empty'
+add_word.not_found: 'word "{word}" is not found in the game''s dictionary'
+players: 'players'
+current_word: 'current word'
+current_topic: 'topic'
+admin.use_dictionary: 'use dictionary for player''s words'
+admin.submit_round_topics: 'submit round topics'
+admin.end_round: 'end round'
+admin.copy_to_clipboard: 'copy to clipboard'
+admin.start_game: 'start game'
+admin.hello: 'hello {name}!'
+index.welcome: 'banality game'
+admin.create_game: 'create game'
+index.login.title: login
+admin.create.title: 'new game'
+logout: logout
+index.please_sign_in: 'please sign in'
+index.nickname: 'nickname'
+index.enter: enter
+user.title: 'banality game'
+user.word.placeholder: word
+submit: submit
+hello: 'hello {name}!'
+admin.next_word: 'next word'
+admin.end_game: 'end game'
+admin.next_round: 'next round'
+error.game_access_denied: 'oops! the game is already started or even ended so you cannot enter anymore :('
+admin.title: 'banality game - admin'
+admin.round_number: 'round #{round_number}'

@@ -9,6 +9,13 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=RoundRepository::class)
+ * @ORM\Table(
+ *    uniqueConstraints={
+ *        @ORM\UniqueConstraint(
+ *            name="game_topic",
+ *            columns={"game_id", "topic"}
+ *        )
+ *    })
  */
 class Round
 {
@@ -17,32 +24,36 @@ class Round
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $topic;
+    private string $topic;
 
     /**
      * @ORM\OneToMany(targetEntity=RoundStats::class, mappedBy="round", orphanRemoval=true)
+     *
+     * @var Collection<int, RoundStats>
      */
-    private $words;
+    private Collection $words;
 
     /**
      * @ORM\OneToOne(targetEntity=RoundStats::class, cascade={"persist", "remove"})
      */
-    private $currentWord;
+    private ?RoundStats $currentWord;
 
     /**
      * @ORM\ManyToOne(targetEntity=Game::class, inversedBy="rounds")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $game;
+    private Game $game;
 
-    public function __construct()
+    public function __construct(string $topic, Game $game)
     {
         $this->words = new ArrayCollection();
+        $this->topic = $topic;
+        $this->game = $game;
     }
 
     public function getId(): ?int
@@ -63,7 +74,7 @@ class Round
     }
 
     /**
-     * @return Collection|RoundStats[]
+     * @return Collection<int, RoundStats>|RoundStats[]
      */
     public function getWords(): Collection
     {
@@ -82,12 +93,7 @@ class Round
 
     public function removeWord(RoundStats $word): self
     {
-        if ($this->words->removeElement($word)) {
-            // set the owning side to null (unless already changed)
-            if ($word->getRound() === $this) {
-                $word->setRound(null);
-            }
-        }
+        $this->words->removeElement($word);
 
         return $this;
     }

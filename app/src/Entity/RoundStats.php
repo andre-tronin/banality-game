@@ -7,6 +7,13 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=RoundStatsRepository::class)
+ * @ORM\Table(
+ *    uniqueConstraints={
+ *        @ORM\UniqueConstraint(
+ *            name="round_word",
+ *            columns={"round_id", "word"}
+ *        )
+ *    })
  */
 class RoundStats
 {

@@ -1,0 +1,17 @@
+{% extends 'admin/index.html.twig' %}
+{% block content %}
+	<form method="post">
+		<input type="text" name="rounds[]"><br>
+		<input type="text" name="rounds[]"><br>
+		<input type="text" name="rounds[]"><br>
+		<input type="text" name="rounds[]"><br>
+		<input type="text" name="rounds[]"><br>
+		<input type="text" name="rounds[]"><br>
+		<input type="text" name="rounds[]"><br>
+		<input type="text" name="rounds[]"><br>
+		<input type="text" name="rounds[]"><br>
+		<input type="text" name="rounds[]"><br>
+		<input type="checkbox" name="dictionary" checked><label for="dictionary">{{ 'admin.use_dictionary'|trans }}</label><br>
+		<input type="submit" value="{{ 'admin.submit_round_topics'|trans }}">
+	</form>
+{% endblock %}
