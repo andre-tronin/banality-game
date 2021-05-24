@@ -33,6 +33,7 @@ class Round
 
     /**
      * @ORM\OneToMany(targetEntity=RoundStats::class, mappedBy="round", orphanRemoval=true)
+     * @ORM\OrderBy({"count" = "DESC"})
      *
      * @var Collection<int, RoundStats>
      */
