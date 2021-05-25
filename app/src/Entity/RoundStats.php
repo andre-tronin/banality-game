@@ -25,7 +25,7 @@ class RoundStats
     private int $id;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=700, nullable=false)
      */
     private string $word;
 
