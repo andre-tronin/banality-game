@@ -5,11 +5,11 @@
 		<h3>{{ topic }}</h3>
 	</div>
 
-	<ul class="list-group">
+	<ol class="list-group">
 		{% for word in words %}
 			<li class="list-group-item list-group-item-success">{{ word.word }}</li>
 		{% endfor %}
-	</ul>
+	</ol>
 
 	{% if words|length < 10 %}
 		<form method="post">

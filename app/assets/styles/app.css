@@ -12,3 +12,7 @@ h1, h2, h3 {
 .center {
 	text-align: center;
 }
+
+.list-group-item {
+  display: list-item;
+}
