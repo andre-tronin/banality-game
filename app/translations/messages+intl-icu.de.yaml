@@ -29,3 +29,4 @@ user.title: Die Banalitäten
 user.word.placeholder: Wort
 submit: Senden
 hello: 'Hallo {name}!'
+admin.start.warning: 'Nachdem das Spiel gestartet wurde, wird kein Spieler mehr eintreten können!'
