@@ -49,7 +49,10 @@ class UserController extends AbstractController
      */
     public function startAction(Game $game, array $userStats): Response
     {
-        $this->gameService->addUser($game, $this->getUser());
+        if (!$game->getUsers()->contains($this->getUser())) {
+            $this->gameService->addUser($game, $this->getUser());
+            $userStats = $this->gameService->getUserStats($game);
+        }
 
         return $this->render('user/start.html.twig', [
             'userStats' => $userStats,

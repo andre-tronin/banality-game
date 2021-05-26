@@ -110,11 +110,9 @@ class GameService
 
     public function addUser(Game $game, User $user): void
     {
-        if (!$game->getUsers()->contains($user)) {
-            $game->addUser($user);
-            $this->entityManager->persist(new UserScore(0, $user, $game));
-            $this->entityManager->flush();
-        }
+        $game->addUser($user);
+        $this->entityManager->persist(new UserScore(0, $user, $game));
+        $this->entityManager->flush();
     }
 
     public function startGame(Game $game): void

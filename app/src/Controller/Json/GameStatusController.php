@@ -10,6 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 #[
     Route('/{game_id}/game-status', name: 'game_status', requirements: ['game_id' => '^[a-z]+-[a-z]+-[a-z]+$']),
+    Route('/{game_id}/admin/game-status', name: 'game_status_admin', requirements: ['game_id' => '^[a-z]+-[a-z]+-[a-z]+$']),
     Entity('game', expr: 'repository.find(game_id)')
 ]
 class GameStatusController extends AbstractController
@@ -20,6 +21,6 @@ class GameStatusController extends AbstractController
             return $this->json($game->getCurrentRound()->getCurrentWord()->getWord());
         }
 
-        return $this->json($game->getStatus());
+        return $this->json($game->getStatus().\count($game->getUsers()));
     }
 }

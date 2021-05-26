@@ -29,3 +29,4 @@ user.title: Банальности
 user.word.placeholder: слово
 submit: отправить
 hello: 'Привет, {name}!'
+admin.start.warning: 'После начала игры никто больше не сможет присоединиться!'
