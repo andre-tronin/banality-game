@@ -20,7 +20,7 @@
 
 	<ul class="list-group">
 		{% for word in words %}
-			<li class="list-group-item list-group-item-success">{{ word.word }}</li>
+			<li class="list-group-item list-group-item-{{ word.word in currentWord|split(', ') ? 'warning' :'success' }}">{{ word.word }}</li>
 		{% endfor %}
 	</ul>
 
