@@ -5,10 +5,10 @@
 {% endblock %}
 
 {% block body %}
-	<ul class="list-group">
+	<ul class="list-group list-group-striped">
 		{% for userScore in userStats %}
-			<li class="list-group-item">{{ userScore.user.nickname }}
-				<span class="badge  bg-secondary">{{ userScore.score }}</span>
+			<li class="list-group-item d-flex list-group-item-action">{{ userScore.user.nickname }}
+				<span class="badge bg-secondary ms-auto">{{ userScore.score }}</span>
 			</li>
 		{% endfor %}
 	</ul>
