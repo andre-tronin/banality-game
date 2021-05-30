@@ -1,5 +1,3 @@
-import $ from 'jquery';
-
 $(function () {
     var storiesInterval = 1 * 1000,
         game = '';
