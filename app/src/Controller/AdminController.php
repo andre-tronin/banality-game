@@ -145,7 +145,7 @@ class AdminController extends AbstractController
     {
         if ($request->isMethod(Request::METHOD_POST) && $request->request->has('rounds')) {
             $game->setUseDictionary((bool) $request->request->get('dictionary'));
-            $this->gameService->addRounds($game, $request->request->get('rounds'));
+            $this->gameService->addRounds($game, $request->request->all('rounds'));
 
             return $this->redirectToRoute('admin', ['game_id' => $game->getId()]);
         }
