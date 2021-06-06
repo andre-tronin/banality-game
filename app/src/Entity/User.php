@@ -41,8 +41,6 @@ class User implements UserInterface
     }
 
     /**
-     * @return string
-     *
      * @deprecated since Symfony 5.3, use getUserIdentifier() instead
      */
     public function getUsername(): string

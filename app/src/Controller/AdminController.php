@@ -145,7 +145,7 @@ class AdminController extends AbstractController
     {
         if ($request->isMethod(Request::METHOD_POST) && $request->request->has('rounds')) {
             $gameLocale = $request->request->getAlpha('game_locale');
-            if (in_array($gameLocale, ['ru', 'de', 'en'], true)) {
+            if (\in_array($gameLocale, ['ru', 'de', 'en'], true)) {
                 $game->setLocale($gameLocale);
             }
             $game->setUseDictionary($request->request->getBoolean('dictionary'));
