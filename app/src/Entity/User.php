@@ -35,14 +35,17 @@ class User implements UserInterface
         return $this->id;
     }
 
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->nickname;
+    }
+
     /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
+     * @deprecated since Symfony 5.3, use getUserIdentifier() instead
      */
     public function getUsername(): string
     {
-        return (string) $this->nickname;
+        return $this->getUserIdentifier();
     }
 
     /**
