@@ -31,3 +31,4 @@ submit: Senden
 hello: 'Hallo {name}!'
 admin.start.warning: 'Nachdem das Spiel gestartet wurde, wird kein Spieler mehr eintreten können!'
 nav.home: 'Die Banalitäten'
+admin.game_locale: 'Sprache des Wörterbuches:'
