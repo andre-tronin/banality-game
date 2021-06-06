@@ -28,8 +28,9 @@ class AccessDeniedHandler implements AccessDeniedHandlerInterface
     public function handle(Request $request, AccessDeniedException $accessDeniedException): ?Response
     {
         // add a custom flash message and redirect to the home page
-        if ($this->requestStack->getSession() instanceof Session) {
-            $this->requestStack->getSession()->getFlashBag()->add('note', $this->translator->trans('error.game_access_denied'));
+        $session = $this->requestStack->getSession();
+        if ($session instanceof Session) {
+            $session->getFlashBag()->add('note', $this->translator->trans('error.game_access_denied'));
         }
 
         return new RedirectResponse($this->urlGenerator->generate('home'));
