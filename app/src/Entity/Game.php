@@ -186,4 +186,11 @@ class Game
 
         return $this;
     }
+
+    public function setLocale(string $locale): self
+    {
+        $this->locale = $locale;
+
+        return $this;
+    }
 }

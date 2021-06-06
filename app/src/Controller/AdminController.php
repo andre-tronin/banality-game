@@ -144,7 +144,11 @@ class AdminController extends AbstractController
     public function createAction(Game $game, array $userStats, Request $request): Response
     {
         if ($request->isMethod(Request::METHOD_POST) && $request->request->has('rounds')) {
-            $game->setUseDictionary((bool) $request->request->get('dictionary'));
+            $gameLocale = $request->request->getAlpha('game_locale');
+            if (in_array($gameLocale, ['ru', 'de', 'en'], true)) {
+                $game->setLocale($gameLocale);
+            }
+            $game->setUseDictionary($request->request->getBoolean('dictionary'));
             $this->gameService->addRounds($game, $request->request->all('rounds'));
 
             return $this->redirectToRoute('admin', ['game_id' => $game->getId()]);
